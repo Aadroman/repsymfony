@@ -9,11 +9,11 @@
     {% for user in users %}
         <li class="user-item">
             <div class="user-picture">
-                <img src={{user.cover}} width="300" height="300" alt="image de {{user.name}}">
+                <img src={{user.picture}} alt="image de {{user.name}}">
             </div>
             <div class="user-details">
-                <div class="user-image"
-                    <img src={{user.picture}} width="50" height="50" alt="image de {{user.name}}">
+                <div class="user-image">
+                    <img src={{user.cover}} alt="image de {{user.name}}">
                 </div>
                 <div class="user-names">
                     <h2>{{user.name}}</h2>
