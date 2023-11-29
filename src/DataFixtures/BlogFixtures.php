@@ -24,8 +24,7 @@ class BlogFixtures extends Fixture
             $dateU = DateTimeImmutable::createFromMutable($faker->dateTime());
             $user = (new Tp4Bd())->setTp4Bd($faker->name())
                                 ->setPassword(sha1("leMotDePasse"))
-                                ->setCreatedAt($dateU)
-                                ->setProfile(NULL);
+                                ->setCreatedAt($dateU);
             $manager->persist($user);
 
             $dateA = DateTimeImmutable::createFromMutable($faker->dateTime());
@@ -41,7 +40,7 @@ class BlogFixtures extends Fixture
                                     ->setCoverPicture("https://picsum.photos/360/360?image=".($i+100))
                                     ->setDescription($faker->paragraph())
                                     ->setCreatedAt($dateP);
-
+            $user->setProfile($Profile);
             $users[] = $user; 
             $manager->persist($address);
             $manager->persist($Profile);
