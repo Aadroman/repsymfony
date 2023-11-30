@@ -13,6 +13,7 @@ use App\Entity\Article;
 use App\Entity\Adress;
 use DateTime;
 use Symfony\Component\Validator\Constraints\Date;
+use Cocur\Slugify\Slugify;
 
 class BlogFixtures extends Fixture
 {
@@ -60,12 +61,15 @@ class BlogFixtures extends Fixture
         
         for($i=0;$i<100; $i++){
             $dateArt = DateTimeImmutable::createFromMutable($faker->dateTime());
-            $article = (new Article())->setTitle($faker->sentence(3))
+            $slugify = new Slugify();
+            $title = $faker->sentence(3);
+            $article = (new Article())->setTitle($title)
                                         ->setContext($faker->text(80))  
                                         ->setImageUrl("https://picsum.photos/360/360?image=".($i+300))
                                         ->setCreatedAt($dateArt)
                                         ->setAuthor($users[rand(0,count($users)-1)])
-                                        ->addCategory($categories[rand(0,count($categories)-1)]);
+                                        ->addCategory($categories[rand(0,count($categories)-1)])
+                                        ->setSlug($slugify->slugify($title));
             $manager->persist($article);
             $manager->flush();
         }

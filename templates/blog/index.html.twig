@@ -5,6 +5,8 @@
 {% block body %}
     <div class="articles">
         {% for article in articles %}
+
+            <a href="{{ path('app_single_article', {'slug': article.slug} ) }}" class="article-item">
             <div class="article-item">
                 <div class="article-image">
                     <img src={{article.imageUrl}} alt="Image de l'article : {{article.title}}">
@@ -17,6 +19,10 @@
                     </div>
                     <div class="article-content-details">
                         <h2 class="article-title">{{article.title}}</h2>
+                        <div class="article-createdAt">{{article.fromNow}}</div>
+                    </div>
+                </div>
+            </a>
                         <div class="article-createdAt">{{article.FromNow | date("d/m/Y")}}</div>
                     </div>
                 </div>

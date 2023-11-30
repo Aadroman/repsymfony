@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use EsperoSoft\DateFormat\DateFormat;
 
 
+
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
 class Profile
 {
@@ -115,11 +116,13 @@ class Profile
     }
 
 
+
     /**
      * Get the value of fromNow
      */ 
     public function getFromNow() : string {
         return DateFormat::fromNow($this->createdAt) ;
     }
+
         
 }

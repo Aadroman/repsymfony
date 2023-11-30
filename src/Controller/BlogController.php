@@ -45,4 +45,19 @@ class BlogController extends AbstractController
         ]);
     }
 
+    // #[Route('/blog/article/{id}', name: 'app_single_article_id')]
+    // public function singleId(ArticleRepository $repoArticle, $id): Response
+    // {
+    //     $article = $repoArticle->findOneById($id); //on peut rechercher n'importe quel attribut de l'entité
+    //     return $this->render('blog/single.html.twig', ['article' => $article,]);
+    // }
+
+    #[Route('/blog/article/{slug}', name: 'app_single_article')]
+    public function single(ArticleRepository $repoArticle, string $slug): Response
+    {
+        $article = $repoArticle->findOneBySlug($slug); //on peut rechercher n'importe quel attribut de l'entité
+        return $this->render('blog/single.html.twig', ['article' => $article,]);
+    }
+
+
 }
