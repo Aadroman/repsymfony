@@ -15,6 +15,8 @@ use DateTime;
 use Symfony\Component\Validator\Constraints\Date;
 use Cocur\Slugify\Slugify;
 
+use function PHPUnit\Framework\isEmpty;
+
 class BlogFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
@@ -50,10 +52,13 @@ class BlogFixtures extends Fixture
         $categories = [];
         for($i=0;$i<5; $i++){
             $dateC = DateTimeImmutable::createFromMutable($faker->dateTime());
-            $category = (new Category())->setName($faker->sentence(2))
+            $slugify = new Slugify(); //initialisation de l'objet slugify
+            $name = $faker->sentence(2); //le nom de la categorie
+            $category = (new Category())->setName($name)
                                         ->setDescription($faker->paragraph())  
                                         ->setImageUrl("https://picsum.photos/360/360?image=".($i+200))
-                                        ->setCreatedAt($dateC);
+                                        ->setCreatedAt($dateC)
+                                        ->setSlug($slugify->slugify($name)); //gestion du slug à partir du nom de la catégorie
             $categories[] = $category;
             $manager->persist($category);
             $manager->flush();
@@ -63,13 +68,16 @@ class BlogFixtures extends Fixture
             $dateArt = DateTimeImmutable::createFromMutable($faker->dateTime());
             $slugify = new Slugify();
             $title = $faker->sentence(3);
+            $category = $categories[rand(0,count($categories)-1)]; //on définit la catégorie sélectionné, en avance pour pouvoir la réemployer
             $article = (new Article())->setTitle($title)
                                         ->setContext($faker->text(80))  
                                         ->setImageUrl("https://picsum.photos/360/360?image=".($i+300))
                                         ->setCreatedAt($dateArt)
                                         ->setAuthor($users[rand(0,count($users)-1)])
-                                        ->addCategory($categories[rand(0,count($categories)-1)])
+                                        ->addCategory($category) //on lie une catégorie aléatoire à l'artcile que l'on crée
                                         ->setSlug($slugify->slugify($title));
+            $category->addArticle($article);//on lie l'article crée à la catégorie selectionné
+            $manager->persist($category); //on update la catégorie en même temps que l'on ajoute les articles dans la BD 
             $manager->persist($article);
             $manager->flush();
         }

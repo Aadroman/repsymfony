@@ -8,11 +8,11 @@
     --main-color-white: rgb(70, 70, 70);
     --main-gradient: linear-gradient(var(--main-color), var(--main-color-white), var(--main-color));
 } */
-/* :root{
+:root{
     --main-color: #000226;
     --main-color-white: #17193f;
     --main-gradient: linear-gradient(var(--main-color), var(--main-color-white), var(--main-color));
-} */
+}
 /* :root{
     --main-color: #b0008a;
     --main-color-white: rgb(255, 82, 229);
@@ -28,7 +28,3 @@
     --main-color-white: rgb(255, 155, 32);
     --main-gradient: linear-gradient(var(--main-color), var(--main-color-white), var(--main-color));
 } */
-
-:root{
-    --main-color: #008080;
-}

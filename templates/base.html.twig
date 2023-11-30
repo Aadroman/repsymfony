@@ -15,6 +15,32 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+            <a href="{{path('app_root')}}"> <h2>Blog</h2> </a>
+            <nav>
+                <ul class="nav-bar flex aic">
+                    <li class="nav-item"><a href="">About</a></li>
+                    <li class="nav-item down"><a href="#">Categories</a>
+                        <ul class="nav-bar">
+                        {% for category in categories %}
+                            <li class="nav-item">
+                                <a href="{{path('app_articles_by_category',{'slug':category.slug})}}">
+                                    {{category.name}}
+                                </a>
+                                ({{category.articles | length}} articles)
+                            </li>
+                        {% endfor %}
+                            {# <li class="nav-item"><a href="">Category 1</a></li>
+                            <li class="nav-item"><a href="">Category 2</a></li>
+                            <li class="nav-item"><a href="">Category 3</a></li> #}
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>
