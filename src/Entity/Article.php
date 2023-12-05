@@ -34,7 +34,7 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tp4Bd $author = null;
+    private ?User $author = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class)]
     private Collection $categories;
@@ -114,12 +114,12 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?Tp4Bd
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?Tp4Bd $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 
