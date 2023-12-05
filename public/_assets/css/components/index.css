@@ -54,6 +54,7 @@ a{
     border-radius: 40px;
     padding: 2px 5px;
 }
+
 .btn {
     padding: 10px;
     padding-left: 2px;
@@ -113,6 +114,9 @@ tr {
 /* Additional styling for table header */
 th {
     background-color: #f2f2f2;
+    width: 100%;
+    box-shadow: 0 2px 25px #1d1d1d;
+    background: var(--main-gradient);
 }
 footer{
     background: var(--main-gradient);
