@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use EsperoSoft\DateFormat\DateFormat;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -37,6 +38,11 @@ class Article
 
     #[ORM\ManyToMany(targetEntity: Category::class)]
     private Collection $categories;
+
+    private ?string $fromNow = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null; 
 
     public function __construct()
     {
@@ -140,6 +146,25 @@ class Article
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fromNow
+     */ 
+    public function getFromNow() : string {
+        return DateFormat::fromNow($this->createdAt) ;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

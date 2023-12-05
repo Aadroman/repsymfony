@@ -13,6 +13,7 @@ use App\Entity\Article;
 use App\Entity\Adress;
 use DateTime;
 use Symfony\Component\Validator\Constraints\Date;
+use Cocur\Slugify\Slugify;
 
 class BlogFixtures extends Fixture
 {
@@ -24,8 +25,7 @@ class BlogFixtures extends Fixture
             $dateU = DateTimeImmutable::createFromMutable($faker->dateTime());
             $user = (new Tp4Bd())->setTp4Bd($faker->name())
                                 ->setPassword(sha1("leMotDePasse"))
-                                ->setCreatedAt($dateU)
-                                ->setProfile(NULL);
+                                ->setCreatedAt($dateU);
             $manager->persist($user);
 
             $dateA = DateTimeImmutable::createFromMutable($faker->dateTime());
@@ -41,7 +41,7 @@ class BlogFixtures extends Fixture
                                     ->setCoverPicture("https://picsum.photos/360/360?image=".($i+100))
                                     ->setDescription($faker->paragraph())
                                     ->setCreatedAt($dateP);
-
+            $user->setProfile($Profile);
             $users[] = $user; 
             $manager->persist($address);
             $manager->persist($Profile);
@@ -61,12 +61,15 @@ class BlogFixtures extends Fixture
         
         for($i=0;$i<100; $i++){
             $dateArt = DateTimeImmutable::createFromMutable($faker->dateTime());
-            $article = (new Article())->setTitle($faker->sentence(3))
+            $slugify = new Slugify();
+            $title = $faker->sentence(3);
+            $article = (new Article())->setTitle($title)
                                         ->setContext($faker->text(80))  
                                         ->setImageUrl("https://picsum.photos/360/360?image=".($i+300))
                                         ->setCreatedAt($dateArt)
                                         ->setAuthor($users[rand(0,count($users)-1)])
-                                        ->addCategory($categories[rand(0,count($categories)-1)]);
+                                        ->addCategory($categories[rand(0,count($categories)-1)])
+                                        ->setSlug($slugify->slugify($title));
             $manager->persist($article);
             $manager->flush();
         }
