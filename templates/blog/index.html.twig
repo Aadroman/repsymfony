@@ -1,25 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BlogController!{% endblock %}
+{% block title %}The Blog{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="articles">
+        {% for article in articles %}
 
-<div class="example-wrapper">
-    <h1>Article {{ id }}! ✅</h1>
-    <h2>Article name : {{name}}</h2>
-</div>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/syfy22/public_html/symfony/src/Controller/BlogController.php'|file_link(0) }}">src/Controller/BlogController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/syfy22/public_html/symfony/templates/blog/index.html.twig'|file_link(0) }}">templates/blog/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <a href="{{ path('app_single_article', {'slug': article.slug} ) }}" class="article-item">
+            <div class="article-item">
+                <div class="article-image">
+                    <img src={{article.imageUrl}} alt="Image de l'article : {{article.title}}">
+                </div>
+                <div class="article-details flex">
+                    <div class="article-author-details">
+                        <div class="article-author-picture">
+                            <img src={{article.author.profile.picture}} alt="Image de profile de {{article.author.Tp4bd}}">
+                        </div>
+                    </div>
+                    <div class="article-content-details">
+                        <h2 class="article-title">{{article.title}}</h2>
+                        <div class="article-createdAt">{{article.fromNow}}</div>
+                    </div>
+                </div>
+            </a>
+                        <div class="article-createdAt">{{article.FromNow | date("d/m/Y")}}</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
