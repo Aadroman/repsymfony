@@ -23,6 +23,8 @@ use DateTimeImmutable;
 use DateTimeZone;
 use DateTime;
 
+
+
 class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -64,6 +66,7 @@ class ArticleType extends AbstractType
                 'label_attr' => [
                     'style' => 'display: none;', // This will hide the label
                 ],
+
             ])
             ->add('author', EntityType::class, [
                 'class' => User::class,
@@ -85,6 +88,7 @@ class ArticleType extends AbstractType
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $data = $event->getData();
                 $form = $event->getForm();
+
                 // $utc_timezone = new DateTimeZone("UTC");
                 // $timestamp = time();
                 // $currentDate = gmdate('Y-m-d', $timestamp);
@@ -98,14 +102,15 @@ class ArticleType extends AbstractType
     
                     // Set the slug field with the generated slug
                     $data['slug'] = $slug;
-                    // $data['updatedAt'] = $dateu;
-                    $event->setData($data);
 
+                    // $dateU = new DateTimeImmutable();
+                    // $data['updatedAt'] = $dateU;
+                    // // Update the form data
+                    // $event->setData($data);
+
+                    $event->setData($data);
                 }
-                // $dateU = new DateTimeImmutable();
-                // $data['updatedAt'] = $dateU;
-                // // Update the form data
-                // $event->setData($data);
+               
             })
             
         ;

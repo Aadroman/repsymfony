@@ -38,6 +38,7 @@
             <tr>
                 <th>Categories</th>
                 <td>
+
                 {% for category in article.categories %}
                     <div class="article-category-item badge">
                         <a href="{{ path('app_single_category', {'slug': category.slug}) }}">{{ category.name }}</a> ({{ category.articles | length }} article(s) publié(s))

@@ -63,6 +63,7 @@ class BlogController extends AbstractController
         return $this->render('blog/single.html.twig', ['article' => $article,'categories'=>$categories,]);
     }
 
+
     #[Route('/blog/category/{slug}', name: 'app_single_category')]
     public function single_category(CategoryRepository $repoCategory,string $slug): Response
     {
