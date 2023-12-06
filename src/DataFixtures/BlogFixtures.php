@@ -7,12 +7,15 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use App\Entity\Profile;
-use App\Entity\Tp4Bd;
+use App\Entity\User;
 use App\Entity\Category;
 use App\Entity\Article;
 use App\Entity\Adress;
 use DateTime;
 use Symfony\Component\Validator\Constraints\Date;
+use Cocur\Slugify\Slugify;
+
+use function PHPUnit\Framework\isEmpty;
 
 class BlogFixtures extends Fixture
 {
@@ -22,10 +25,9 @@ class BlogFixtures extends Fixture
         $users = [];
         for($i = 0; $i <50; $i++){
             $dateU = DateTimeImmutable::createFromMutable($faker->dateTime());
-            $user = (new Tp4Bd())->setTp4Bd($faker->name())
+            $user = (new User())->setName($faker->name())
                                 ->setPassword(sha1("leMotDePasse"))
-                                ->setCreatedAt($dateU)
-                                ->setProfile(NULL);
+                                ->setCreatedAt($dateU);
             $manager->persist($user);
 
             $dateA = DateTimeImmutable::createFromMutable($faker->dateTime());
@@ -41,7 +43,7 @@ class BlogFixtures extends Fixture
                                     ->setCoverPicture("https://picsum.photos/360/360?image=".($i+100))
                                     ->setDescription($faker->paragraph())
                                     ->setCreatedAt($dateP);
-
+            $user->setProfile($Profile);
             $users[] = $user; 
             $manager->persist($address);
             $manager->persist($Profile);
@@ -50,10 +52,13 @@ class BlogFixtures extends Fixture
         $categories = [];
         for($i=0;$i<5; $i++){
             $dateC = DateTimeImmutable::createFromMutable($faker->dateTime());
-            $category = (new Category())->setName($faker->sentence(2))
+            $slugify = new Slugify(); //initialisation de l'objet slugify
+            $name = $faker->sentence(2); //le nom de la categorie
+            $category = (new Category())->setName($name)
                                         ->setDescription($faker->paragraph())  
                                         ->setImageUrl("https://picsum.photos/360/360?image=".($i+200))
-                                        ->setCreatedAt($dateC);
+                                        ->setCreatedAt($dateC)
+                                        ->setSlug($slugify->slugify($name)); //gestion du slug à partir du nom de la catégorie
             $categories[] = $category;
             $manager->persist($category);
             $manager->flush();
@@ -61,13 +66,19 @@ class BlogFixtures extends Fixture
         
         for($i=0;$i<100; $i++){
             $dateArt = DateTimeImmutable::createFromMutable($faker->dateTime());
+            $slugify = new Slugify();
+            $category = $categories[rand(0,count($categories)-1)]; //on définit la catégorie sélectionné, en avance pour pouvoir la réemployer
             $article = (new Article())->setTitle($faker->sentence(3))
                                         ->setContext($faker->text(80))  
                                         ->setImageUrl("https://picsum.photos/360/360?image=".($i+300))
                                         ->setCreatedAt($dateArt)
                                         ->setAuthor($users[rand(0,count($users)-1)])
-                                        ->addCategory($categories[rand(0,count($categories)-1)]);
-            $manager->persist($article);
+                                        ->addCategory($category) //on lie une catégorie aléatoire à l'artcile que l'on crée
+                                        ->setSlug($slugify);
+                                        
+            //on lie l'article crée à la catégorie selectionné
+             //on update la catégorie en même temps que l'on ajoute les articles dans la BD 
+            // $manager->persist($article);
             $manager->flush();
         }
 

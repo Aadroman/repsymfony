@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\ProfileRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use EsperoSoft\DateFormat\DateFormat;
+
+
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
 class Profile
@@ -31,6 +34,8 @@ class Profile
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    private ?string $fromNow = null; 
 
 
     public function getId(): ?int
@@ -110,4 +115,14 @@ class Profile
         return $this;
     }
 
+
+
+    /**
+     * Get the value of fromNow
+     */ 
+    public function getFromNow() : string {
+        return DateFormat::fromNow($this->createdAt) ;
+    }
+
+        
 }

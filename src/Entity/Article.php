@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use EsperoSoft\DateFormat\DateFormat;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -33,10 +35,15 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tp4Bd $author = null;
+    private ?User $author = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class)]
     private Collection $categories;
+
+    private ?string $fromNow = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null; 
 
     public function __construct()
     {
@@ -101,19 +108,17 @@ class Article
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
-    public function getAuthor(): ?Tp4Bd
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?Tp4Bd $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 
@@ -142,5 +147,22 @@ class Article
         $this->categories->removeElement($category);
 
         return $this;
+    }
+
+    /**
+     * Get the value of fromNow
+     */ 
+    public function getFromNow() : string {
+        return DateFormat::fromNow($this->createdAt) ;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(Slugify $slugify): void
+    {
+        $this->slug = $slugify->slugify($this->title);
     }
 }
