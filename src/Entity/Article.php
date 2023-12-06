@@ -164,5 +164,6 @@ class Article
     public function setSlug(Slugify $slugify): void
     {
         $this->slug = $slugify->slugify($this->title);
+
     }
 }

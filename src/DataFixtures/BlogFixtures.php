@@ -68,17 +68,19 @@ class BlogFixtures extends Fixture
             $dateArt = DateTimeImmutable::createFromMutable($faker->dateTime());
             $slugify = new Slugify();
             $category = $categories[rand(0,count($categories)-1)]; //on définit la catégorie sélectionné, en avance pour pouvoir la réemployer
-            $article = (new Article())->setTitle($faker->sentence(3))
+            $title = $faker->sentence(3);
+            $category = $categories[rand(0,count($categories)-1)]; //on définit la catégorie sélectionné, en avance pour pouvoir la réemployer
+            $article = (new Article())->setTitle($title)
                                         ->setContext($faker->text(80))  
                                         ->setImageUrl("https://picsum.photos/360/360?image=".($i+300))
                                         ->setCreatedAt($dateArt)
                                         ->setAuthor($users[rand(0,count($users)-1)])
                                         ->addCategory($category) //on lie une catégorie aléatoire à l'artcile que l'on crée
                                         ->setSlug($slugify);
-                                        
             //on lie l'article crée à la catégorie selectionné
              //on update la catégorie en même temps que l'on ajoute les articles dans la BD 
             // $manager->persist($article);
+            //$category->addArticle($article);//on lie l'article crée à la catégorie selectionné
             $manager->flush();
         }
 

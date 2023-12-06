@@ -19,6 +19,10 @@ use Cocur\Slugify\Slugify;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use SebastianBergmann\CodeCoverage\Driver\WriteOperationFailedException;
+use DateTimeImmutable;
+use DateTimeZone;
+use DateTime;
+
 
 
 class ArticleType extends AbstractType
@@ -48,6 +52,8 @@ class ArticleType extends AbstractType
             // Add the 'createdAt' and 'updatedAt' fields with the specified format
             ->add('createdAt', DateType::class, [
                 'input' => 'datetime_immutable',
+                'label' => 'Created At',
+                'format' => 'dd MM yyyy HH mm ss',
             ])
             ->add('author', EntityType::class, [
                 'class' => User::class,
@@ -83,6 +89,7 @@ class ArticleType extends AbstractType
             //     }
                
             // })
+
             
         ;
     }
