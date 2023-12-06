@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h1>Article Index</h1>
+
+    {% for notice in app.flashes('notice') %}
+      <div class="alert alert-success">
+        {{ notice }}
+      </div>
+    {% endfor %}
+
+    <a href="{{ path('app_article_new') }}" class="btn btn-success mb-3">Create New</a>
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Image</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Slug</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for article in articles %}
+            <tr>
+              <td>{{ article.id }}</td>
+              <td>{{ article.title }}</td>
+              <td>{{ article.context }}</td>
+              <td>
+                {% if article.imageUrl %}
+                  <img src="{{ article.imageUrl }}" alt="Article Image" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                {% endif %}
+              </td>
+              <td>{{ article.createdAt ? article.createdAt|date('d/m/Y H:i:s') : '' }}</td>
+              <td>{{ article.updatedAt ? article.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
+              <td>{{ article.slug }}</td>
+             
+              <td style="max-width: 100px; padding-left: 10px;">
+                <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-sm btn-primary">Show</a>
+                <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="8">No records found</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
