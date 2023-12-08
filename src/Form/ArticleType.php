@@ -54,6 +54,7 @@ class ArticleType extends AbstractType
                 'input' => 'datetime_immutable',
                 'label' => 'Created At',
                 'format' => 'dd MM yyyy',
+
             ])
             ->add('author', EntityType::class, [
                 'class' => User::class,
