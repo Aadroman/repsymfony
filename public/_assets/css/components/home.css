@@ -35,7 +35,13 @@
     padding: 10px 0;
 }
 
+.category-infos{
+    text-align: center;
+    padding: 10px 0;
+}
+
 
 .articles .article-item .article-title{
     font-size: 1.1rem;
+
 }

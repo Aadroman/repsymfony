@@ -1,0 +1,33 @@
+{# create.html.twig ou edit.html.twig #}
+
+{% block title %}Create/Update Article{% endblock %}
+
+    {{ form_start(form) }}
+    <table>
+        <tr>
+            <th>{{ form_label(form.title) }}</th>
+            <td>{{ form_widget(form.title) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.context) }}</th>
+            <td>{{ form_widget(form.context) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.imageUrl) }}</th>
+            <td>{{ form_widget(form.imageUrl) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.createdAt) }}</th>
+            <td>{{ form_widget(form.createdAt) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.categories) }}</th>
+            <td>{{ form_widget(form.categories) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.author) }}</th>
+            <td>{{ form_widget(form.author) }}</td>
+        </tr>
+    </table>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}

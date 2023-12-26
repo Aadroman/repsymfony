@@ -16,24 +16,24 @@
     </head>
     <body>
         <header>
-            <a href="{{path('app_blog_articles')}}"> <h2>{{nomBlog}}</h2> </a>
+            <a href="{{path('app_disco_index')}}"> <h2>{{nomBlog}}</h2> </a>
             <nav>
                 <ul class="nav-bar flex aic">
                     <li class="nav-item"><a href="">About</a></li>
-                    <li class="nav-item down"><a href="#">Categories</a>
+                    <li class="nav-item down"><a href="#">Type</a>
                         <ul class="nav-bar">
-                        {% for category in categoryRepository.findAll() %}
+                        {% for type in typeRepository.findAll() %}
                             <li class="nav-item">
-                                <a href="{{path('app_single_category',{'slug':category.slug})}}">
-                                    {{category.name}}
+                                <a href="{{path('app_single_type',{'id':type.id})}}">
+                                    {{type.type}}
                                 </a>
-                                ({{category.articles | length}} articles)
+                                ({{type.genreArtiste | length}} artistes)
                             </li>
                         {% endfor %}
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ path('app_article_index') }}">Liste des articles</a>
+                        <a href="{{ path('app_disco_index') }}">Liste des chansons</a>
                     </li>
                     <li class="nav-item"><a href="">Contact</a></li>
                 </ul>

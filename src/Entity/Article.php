@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -34,7 +35,7 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tp4Bd $author = null;
+    private ?User $author = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class)]
     private Collection $categories;
@@ -107,19 +108,17 @@ class Article
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
-    public function getAuthor(): ?Tp4Bd
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?Tp4Bd $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 
@@ -162,10 +161,9 @@ class Article
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(Slugify $slugify): void
     {
-        $this->slug = $slug;
+        $this->slug = $slugify->slugify($this->title);
 
-        return $this;
     }
 }

@@ -33,7 +33,7 @@ class Adress
 
     #[ORM\ManyToOne(inversedBy: 'adresses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?tp4bd $user = null;
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -112,12 +112,12 @@ class Adress
         return $this;
     }
 
-    public function getUser(): ?tp4bd
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?tp4bd $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 

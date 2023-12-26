@@ -5,6 +5,7 @@
     border: 1px solid #ccc;
     box-shadow: 2px 2px 13px #ccc;
     border-radius: 15px;
+    border: 5px solid var(--main-color);
 }
 .single-article .article-image img{
     width: 100%;
@@ -12,9 +13,13 @@
 }
 .single-article .article-details{
     padding: 20px 0;
+    gap: 10px;
 
 }
 .content{
     text-align: justify;
     line-height: 1.5;
+    /* border: 5px solid var(--main-color); */
+    border-radius: 15px;
+    padding: 10px;
 }

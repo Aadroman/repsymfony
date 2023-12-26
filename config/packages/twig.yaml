@@ -1,5 +1,9 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    globals:
+        nomBlog: "Blog Longeque"
+        categoryRepository: "@App\\Repository\\CategoryRepository"
+        typeRepository: "@App\\Repository\\TypeRepository"
 
 when@test:
     twig:
