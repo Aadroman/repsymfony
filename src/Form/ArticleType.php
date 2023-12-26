@@ -17,7 +17,6 @@ use  Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 
 
-
 class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

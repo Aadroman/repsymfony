@@ -5,6 +5,7 @@ twig:
         categoryRepository: "@App\\Repository\\CategoryRepository"
         typeRepository: "@App\\Repository\\TypeRepository"
 
+
 when@test:
     twig:
         strict_variables: true
