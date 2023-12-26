@@ -1,0 +1,54 @@
+{% extends 'discoBase.html.twig' %}
+
+{% block title %}Chanson{% endblock %}
+
+{% block body %}
+    <h1>Chanson</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ chanson.titre }}</td>
+            </tr>
+            <tr>
+                <th>Date de sortie</th>
+                <td>{{ chanson.dateSortie ? chanson.dateSortie|date('d-m-Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ chanson.genre }}</td>
+            </tr>
+            <tr>
+                <th>Langue</th>
+                <td>{{ chanson.langue }}</td>
+            </tr>
+            <tr>
+                <th>Couverture de la chanson</th>
+                <td>
+                {% if chanson.photoCouverture %}
+                    <img src="{{ chanson.photoCouverture }}" alt="Article Image" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Artistes associés</th>
+                <td>
+
+                {% for artiste in chanson.artistes %}
+                    <div class="article-category-item badge">
+                        <a href="{{ path('app_single_artiste', {'id': artiste.id}) }}">{{artiste.prenom}} {{ artiste.nom }}</a> 
+                    </div>
+                {% endfor %}        
+                </td>
+                {# <td>{{ article.categories }}</td> #}
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn" href="{{ path('app_disco_index') }}">Retour à la liste des chansons</a>
+
+    <a class="btn" href="{{ path('app_chanson_edit', {'id': chanson.id}) }}">Modifier</a>
+
+    {{ include('discotheque/_delete_form.html.twig') }}
+{% endblock %}

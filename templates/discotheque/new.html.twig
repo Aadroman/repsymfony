@@ -1,0 +1,11 @@
+{% extends 'discoBase.html.twig' %}
+
+{% block title %}Nouvelle Chanson{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle chanson</h1>
+    {{ include('discotheque/_form.html.twig') }}
+<br>
+<a class="btn" href="{{ path('app_disco_index') }}">Retour à la liste des chansons</a>
+  
+{% endblock %}

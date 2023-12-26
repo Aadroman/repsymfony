@@ -1,0 +1,30 @@
+{% extends 'discoBase.html.twig' %}
+
+{% block title %}The Blog{% endblock %}
+
+{% block body %}
+    <div class="category-infos"><strong>Artistes de la catégorie : </strong>{{type.type}}</div>
+    <div class="articles-infos"><strong>{{artistes | length}}</strong> artiste(s) associé(s) </div>
+    <div class="articles">
+        {% for artiste in artistes %}
+            <a href="{{ path('app_single_artiste', {'id': artiste.id} ) }}" class="article-item">
+                <div class="article-item">
+                    <div class="article-image">
+                        <img src={{artiste.photo}} alt="Image de l'artiste : {{artiste.nom}}">
+                    </div>
+                    <div class="article-details flex">
+                        {# <div class="article -author-details">
+                            <div class="article-author-picture">
+                                <img src={{article.author.profile.picture}} alt="Image de profile de {{article.author.name}}">
+                            </div>
+                        </div> #}
+                        <div class="article-content-details">
+                            <h2 class="article-title">{{artiste.prenom}} {{artiste.nom}}</h2>
+                            {# <div class="article-createdAt">{{artiste.dateNaissance}}</div> #}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

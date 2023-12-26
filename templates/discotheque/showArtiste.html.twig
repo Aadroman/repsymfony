@@ -1,0 +1,66 @@
+{% extends 'discoBase.html.twig' %}
+
+{% block title %}Artiste{% endblock %}
+
+{% block body %}
+    <h1>Artiste</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ artiste.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ artiste.nom }}</td>
+            </tr>
+            <tr>
+                <th>Date de Naissance</th>
+                <td>{{ artiste.dateNaissance ? artiste.dateNaissance|date('d-m-Y') : ''}}</td>
+            </tr>
+            <tr>
+                <th>Lieu de naissance</th>
+                <td>{{ artiste.lieuNaissance }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>
+                    <div class="article-category-item badge">
+                        <a href="{{path('app_single_type',{'id':artiste.type.id})}}">{{ artiste.type.type }}</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>
+                    {% if artiste.photo %}
+                        <img src="{{ artiste.photo }}" alt="Article Image" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ artiste.description }}</td>
+            </tr>
+            <tr>
+                <th>Chansons associés</th>
+                <td>
+
+                {% for chanson in artiste.participerChanson %}
+                    <div class="article-category-item badge">
+                        <a href="{{ path('app_single_chanson', {'id': chanson.id}) }}">{{ chanson.titre }}</a> 
+                    </div>
+                {% endfor %}
+                </td>
+                {# <td>{{ article.categories }}</td> #}
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn" href="{{path('app_single_type',{'id':artiste.type.id})}}">Retour à la liste des artistes</a>
+
+    {# <a class="btn" href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a> #}
+
+    {# {{ include('discotheque/_delete_form.html.twig') }} #}
+{% endblock %}

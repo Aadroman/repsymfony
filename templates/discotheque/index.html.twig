@@ -1,0 +1,55 @@
+{% extends 'discoBase.html.twig' %}
+
+{% block title %}Chanson index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Chanson Index</h1>
+
+        {% for notice in app.flashes('notice') %}
+            <div class="alert alert-success">
+                {{ notice }}
+            </div>
+        {% endfor %}
+
+        <a href="{{ path('app_chanson_new') }}" class="btn btn-success mb-3">Create New</a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>DateSortie</th>
+                    <th>Genre</th>
+                    <th>Langue</th>
+                    <th>PhotoCouverture</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for chanson in chansons %}
+                <tr>
+                    <td>{{ chanson.id }}</td>
+                    <td>{{ chanson.titre }}</td>
+                    <td>{{ chanson.dateSortie ? chanson.dateSortie|date('d/m/Y') : '' }}</td>
+                    <td>{{ chanson.genre }}</td>
+                    <td>{{ chanson.langue }}</td>
+                    <td>
+                    {% if chanson.photoCouverture %}
+                    <img src="{{ chanson.photoCouverture }}" alt="Article Image" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                    {% endif %}
+                    </td>
+                    <td style="max-width: 100px; padding-left: 10px;">
+                        <a href="{{ path('app_single_chanson', {'id': chanson.id}) }}" class="btn btn-sm btn-primary">show</a>
+                        <a href="{{ path('app_chanson_edit', {'id': chanson.id}) }}" class="btn btn-warning btn-sm">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

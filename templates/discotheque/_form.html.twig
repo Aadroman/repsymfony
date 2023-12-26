@@ -1,0 +1,32 @@
+{# create.html.twig ou edit.html.twig #}
+
+    {{ form_start(form) }}
+    <br>
+    <table>
+        <tr>
+            <th>{{ form_label(form.titre) }}</th>
+            <td>{{ form_widget(form.titre) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.dateSortie) }}</th>
+            <td>{{ form_widget(form.dateSortie) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.genre) }}</th>
+            <td>{{ form_widget(form.genre) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.langue) }}</th>
+            <td>{{ form_widget(form.langue) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.photoCouverture) }}</th>
+            <td>{{ form_widget(form.photoCouverture) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.artistes) }}</th>
+            <td>{{ form_widget(form.artistes) }}</td>
+        </tr>
+    </table>
+    <button class="btn">{{ button_label|default('Sauver') }}</button>
+    {{ form_end(form) }}
